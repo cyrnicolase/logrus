@@ -104,14 +104,7 @@ func (f *MixFormatter) Format(entry *Entry) ([]byte, error) {
 		return nil, fmt.Errorf("failed to marshal fields to JSON, %v", err)
 	}
 
-	var ret *bytes.Buffer
-	if nil != entry.Buffer {
-		ret = entry.Buffer
-	} else {
-		ret = &bytes.Buffer{}
-	}
+	result := fmt.Sprintf("[%s]\t%s\t%s\t%s", entry.Time.Format(timestampFormat), entry.Level.String(), entry.Message, b.String())
 
-	ret.WriteString(fmt.Sprintf("[%s]\t%s\t%s\t%s", entry.Time.Format(timestampFormat), entry.Level.String(), entry.Message, b.String()))
-
-	return ret.Bytes(), nil
+	return []byte(result), nil
 }
